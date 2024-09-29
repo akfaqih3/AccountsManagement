@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.AddAccountActivity"
+    >
+
+    <LinearLayout
+        android:id="@+id/pos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="208dp"
+        android:orientation="vertical"
+        android:paddingVertical="32dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Account"
+            android:textSize="32dp"
+            android:textAlignment="center"
+            android:layout_marginBottom="16dp"></TextView>
+
+        <EditText
+            android:id="@+id/accountName_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="name"
+            android:textSize="24dp"
+            android:paddingHorizontal="16dp"></EditText>
+
+        <EditText
+            android:id="@+id/accountMobile_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="mobile"
+            android:textSize="24dp"
+            android:paddingHorizontal="16dp"></EditText>
+
+        <EditText
+            android:id="@+id/accountAllowmax_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:paddingHorizontal="16dp"
+            android:hint="allow max"
+            android:textSize="24dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="32dp"
+            android:layout_marginVertical="16dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="type:"
+                    android:textSize="20dp"></TextView>
+                <Spinner
+                    android:id="@+id/accountType_spnr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    ></Spinner>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:layout_marginStart="48dp"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="activ:"
+                    android:textSize="20dp"></TextView>
+                <CheckBox
+                    android:id="@+id/accountActive_chkbx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></CheckBox>
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+        <ImageView
+            android:id="@+id/account_img"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"
+            android:layout_marginVertical="16dp"></ImageView>
+
+        <Button
+            android:id="@+id/accountSave_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:textSize="20dp"></Button>
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
