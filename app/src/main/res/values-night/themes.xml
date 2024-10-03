@@ -22,7 +22,8 @@
         <item name="popupMenuBackground">@color/primary_dark</item>
         <item name="actionMenuTextColor">@color/on_primary</item>
         <item name="android:textColorHint">@color/background</item>
-        <item name="colorSecondary">@color/primary_light</item>
+        <item name="colorSecondary">@color/text_secondary</item>
+        <item name="textFillColor">@color/accent</item>
     </style>
 
     <style name="list_view">

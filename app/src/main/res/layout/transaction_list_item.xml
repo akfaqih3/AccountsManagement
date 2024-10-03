@@ -25,6 +25,7 @@
             android:paddingHorizontal="4dp">
 
             <LinearLayout
+                android:id="@+id/transaction_accountName_ll"
                 android:layout_width="144dp"
                 android:layout_height="64dp"
                 android:layout_gravity="center"

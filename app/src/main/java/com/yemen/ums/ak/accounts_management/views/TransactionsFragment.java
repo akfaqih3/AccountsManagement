@@ -2,6 +2,7 @@ package com.yemen.ums.ak.accounts_management.views;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,17 +15,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.yemen.ums.ak.accounts_management.R;
 import com.yemen.ums.ak.accounts_management.models.Account;
 import com.yemen.ums.ak.accounts_management.models.DBHelper;
 import com.yemen.ums.ak.accounts_management.models.Transaction;
-import com.yemen.ums.ak.accounts_management.viewModel.TransactionAdapter;
 import com.yemen.ums.ak.accounts_management.viewModel.TransactionsAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,6 +87,17 @@ public class TransactionsFragment extends Fragment {
     Context context ;
     FloatingActionButton newTransactionBtn;
 
+    EditText balance,note;
+    Button transactionSaveBtn;
+    Transaction newTransaction;
+    Spinner account_spnr ;
+    Spinner transactionType_spnr;
+    List<String> transactionType ;
+    List<Account> accounts ;
+    ArrayAdapter<Account> accountAdapter;
+    ArrayAdapter<String> transactionTypeAdapter;
+    AlertDialog alertDialog;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,12 +115,8 @@ public class TransactionsFragment extends Fragment {
 
         loadTransaction();
 
-        newTransactionBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(context,AddTransactionActivity.class));
-            }
-        });
+        newTransactionBtn.setOnClickListener(view -> showTransactionAddDialog());
+
 
     }
 
@@ -122,5 +135,54 @@ public class TransactionsFragment extends Fragment {
         }catch (Exception ex){
             throw new RuntimeException();
         }
+    }
+
+    private void showTransactionAddDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_add_transaction,null,false);
+        builder.setView(view);
+        alertDialog = builder.create();
+
+        initialDialogForm(view);
+        alertDialog.show();
+    }
+
+    private void initialDialogForm(View view){
+        balance = view.findViewById(R.id.balance_txt);
+        note = view.findViewById(R.id.note_txt);
+        transactionSaveBtn = view.findViewById(R.id.transactionSave_btn);
+        account_spnr = view.findViewById(R.id.account_spnr);
+        transactionType_spnr = view.findViewById(R.id.transactionType_spnr);
+
+        transactionType = Transaction.TRANSACTION_TYPE;
+        transactionTypeAdapter = new ArrayAdapter<>(context,android.R.layout.simple_spinner_dropdown_item,transactionType);
+        transactionTypeAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        transactionType_spnr.setAdapter(transactionTypeAdapter);
+
+        accounts = dbHelper.getActiveAccounts();
+        accountAdapter = new ArrayAdapter<>(context,android.R.layout.simple_spinner_dropdown_item,accounts);
+        accountAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        account_spnr.setAdapter(accountAdapter);
+
+        transactionSaveBtn.setOnClickListener(view1 -> saveTransaction());
+    }
+
+    private void saveTransaction(){
+        try {
+            newTransaction =new Transaction();
+            newTransaction.setAccount(accounts.get(account_spnr.getSelectedItemPosition()).getId());
+            newTransaction.setBalance(Double.parseDouble(balance.getText().toString()));
+            newTransaction.setType(Transaction.TRANSACTION_TYPE.get(transactionType_spnr.getSelectedItemPosition()));
+            newTransaction.setNote(note.getText().toString());
+            newTransaction.setCreated(System.currentTimeMillis());
+            newTransaction.setUpdated(System.currentTimeMillis());
+
+            dbHelper.insertTransaction(newTransaction);
+            alertDialog.dismiss();
+            Toast.makeText(context,R.string.msg_save,Toast.LENGTH_SHORT).show();
+        }catch (Exception ex){
+            Toast.makeText(context,ex.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

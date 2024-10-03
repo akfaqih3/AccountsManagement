@@ -20,6 +20,7 @@ import com.yemen.ums.ak.accounts_management.models.Account;
 import com.yemen.ums.ak.accounts_management.models.DBHelper;
 import com.yemen.ums.ak.accounts_management.models.Transaction;
 import com.yemen.ums.ak.accounts_management.views.AccountActivity;
+import com.yemen.ums.ak.accounts_management.views.TransactionsFragment;
 
 import java.util.ArrayList;
 
@@ -84,5 +85,6 @@ public class AccountsAdapter  extends RecyclerView.Adapter<AccountsAdapter.ViewH
         Intent toAccountActivity = new Intent(context, AccountActivity.class);
         toAccountActivity.putExtra("accountID",accountID);
         startActivity(context,toAccountActivity,null);
+
     }
 }

@@ -1,6 +1,5 @@
 package com.yemen.ums.ak.accounts_management;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,25 +8,19 @@ import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.yemen.ums.ak.accounts_management.models.DBHelper;
 import com.yemen.ums.ak.accounts_management.models.MySharedPreferences;
 import com.yemen.ums.ak.accounts_management.views.AccountsFragment;
 import com.yemen.ums.ak.accounts_management.views.FragmentAdapter;
 import com.yemen.ums.ak.accounts_management.views.LoginActivity;
 import com.yemen.ums.ak.accounts_management.views.TransactionsFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     FragmentAdapter fragmentAdapter ;
@@ -35,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     Toolbar toolbar;
     Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentAdapter.addFragment(new AccountsFragment(),"Accounts");
         fragmentAdapter.addFragment(new TransactionsFragment(),"Transactions");
-
         viewPager.setAdapter(fragmentAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
 
     }
 

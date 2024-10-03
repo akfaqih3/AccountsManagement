@@ -86,6 +86,45 @@ public class DBHelper extends SQLiteOpenHelper {
         return accountList;
     }
 
+    public List<Account> getActiveAccounts(){
+        List<Account> accountList = new ArrayList<>();
+
+        SQLiteDatabase database = getReadableDatabase();
+
+        Cursor cursor = database.query(
+                Account.TABLE_NAME,
+                Account.COLUMNS,
+                Account.COLUMN_ACTIVE+" =? ",
+                new String[]{"1"},
+                null,
+                null,
+                Account.COLUMN_NAME
+        );
+
+        if (cursor.moveToFirst()){
+            do {
+                Account account = new Account();
+                account.setId(cursor.getInt(0));
+                account.setName(cursor.getString(1));
+                account.setMobile(cursor.getString(2));
+                account.setAllow_max(cursor.getDouble(3));
+                account.setType(cursor.getString(5));
+                account.setActive((cursor.getInt(6)==1)?true:false);
+                account.setCreated(cursor.getLong(7));
+                account.setUpdated(cursor.getLong(8));
+
+                if (cursor.getBlob(4)!=null){
+                    byte[] photoByte = cursor.getBlob(4);
+                    Bitmap photoBitmap = BitmapFactory.decodeByteArray(photoByte,0,photoByte.length);
+                    account.setPhoto(photoBitmap);
+                }
+
+                accountList.add(account);
+            }while (cursor.moveToNext());
+        }
+        return accountList;
+    }
+
     public Account getAccountByID(int accountID){
         SQLiteDatabase database = getReadableDatabase();
         Account account = new Account();

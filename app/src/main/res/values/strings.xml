@@ -11,7 +11,16 @@
     <string name="hint_co_password">password</string>
     <string name="btn_login">login</string>
     <string name="btn_signup">signup</string>
-
+    <string name="txt_yes">Yes</string>
+    <string name="txt_no">No</string>
+    <string name="txt_save">Save</string>
+    <string name="txt_update">Update</string>
+    <string name="txt_delete">Delete</string>
+    <string name="msg_save">Saved.</string>
+    <string name="msg_update">Updated.</string>
+    <string name="msg_delete">Deleted.</string>
+    <string name="msg_confirmDelete">Are you sure to delete?.</string>
+    <string name="msg_cantDeleteAccount">You can not delete this account becouse it hase uncomplete transactions.</string>
     <!--    strings of account section -->
     <string name="account">Accounts</string>
     <string name="accounts">Account</string>
