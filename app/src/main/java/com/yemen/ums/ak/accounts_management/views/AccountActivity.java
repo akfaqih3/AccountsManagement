@@ -34,6 +34,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +46,7 @@ import com.yemen.ums.ak.accounts_management.models.DBHelper;
 import com.yemen.ums.ak.accounts_management.models.MySharedPreferences;
 import com.yemen.ums.ak.accounts_management.models.Transaction;
 import com.yemen.ums.ak.accounts_management.viewModel.TransactionsAdapter;
+import com.yemen.ums.ak.accounts_management.viewModel.ViewModelTransactions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +79,8 @@ public class AccountActivity extends AppCompatActivity {
     Bitmap imageBitmap;
     AlertDialog alertDialog;
 
+    public static ViewModelTransactions viewModelTransactions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +107,7 @@ public class AccountActivity extends AppCompatActivity {
         accountID = getIntent().getIntExtra("accountID",0);
         context = getApplicationContext();
         dbHelper = new DBHelper(context);
-        account = dbHelper.getAccountByID(accountID);
+
         transactions = (ArrayList<Transaction>) dbHelper.getTransactionsByAccount(accountID);
         transactionsAdapter = new TransactionsAdapter(this,transactions);
         accountTransactions_rv.setLayoutManager(new LinearLayoutManager(context));
@@ -110,24 +115,20 @@ public class AccountActivity extends AppCompatActivity {
 
         account_balance = Account.getAccountBalance(transactions);
 
-        name.setText(account.getName());
-        type.setText(type.getText()+account.getType());
-        mobile.setText(mobile.getText()+account.getMobile());
-        allowmax.setText(allowmax.getText()+String.valueOf(account.getAllow_max()));
-        balance.setText(String.valueOf(account_balance));
-        balance.setTextColor(account.isDebit()?Color.GREEN:Color.RED);
-        active.setChecked(account.isActive());
+       loadData(accountID);
 
-        if (account.getPhoto() != null) {
-            photo.setImageBitmap(account.getPhoto());
-        } else {
-            photo.setImageResource(R.mipmap.ic_launcher);
-        }
+
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         edit.setOnClickListener(view -> editAccount());
+
+        viewModelTransactions = new ViewModelProvider(this).get(ViewModelTransactions.class);
+        viewModelTransactions.getTransactions().observe(this,transactions1 -> {
+            transactionsAdapter.submitList((ArrayList<Transaction>) dbHelper.getTransactionsByAccount(accountID));
+        });
+
     }
 
     @Override
@@ -168,6 +169,23 @@ public class AccountActivity extends AppCompatActivity {
 
     }
 
+    private void loadData(int accountID_){
+
+        account = dbHelper.getAccountByID(accountID_);
+        name.setText(account.getName());
+        type.setText(account.getType());
+        mobile.setText(account.getMobile());
+        allowmax.setText(String.valueOf(account.getAllow_max()));
+        balance.setText(String.valueOf(account_balance));
+        balance.setTextColor(account.isDebit()?Color.GREEN:Color.RED);
+        active.setChecked(account.isActive());
+
+        if (account.getPhoto() != null) {
+            photo.setImageBitmap(account.getPhoto());
+        } else {
+            photo.setImageResource(R.mipmap.ic_launcher);
+        }
+    }
     private void deleteAccount(){
         if (Double.parseDouble(balance.getText().toString()) !=0){
             View view = findViewById(R.id.cardView);
@@ -182,6 +200,8 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dbHelper.deleteAccount(accountID);
+                AccountsFragment.viewModelAccounts.setAccounts(dbHelper.getAccounts());
+                finish();
                 Toast.makeText(context,R.string.msg_delete,Toast.LENGTH_SHORT).show();
             }
         });
@@ -259,7 +279,10 @@ public class AccountActivity extends AppCompatActivity {
             editingAccount.setUpdated(System.currentTimeMillis());
 
             dbHelper.updateAccount(editingAccount);
+            loadData(accountID);
             alertDialog.dismiss();
+            viewModelTransactions.setTransactions(dbHelper.getTransactionsByAccount(accountID));
+            AccountsFragment.viewModelAccounts.setAccounts(dbHelper.getAccounts());
             Toast.makeText(context,R.string.msg_update,Toast.LENGTH_SHORT).show();
         }catch (Exception ex){
             Toast.makeText(context,ex.getMessage(),Toast.LENGTH_SHORT).show();

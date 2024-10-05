@@ -3,17 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background"
     android:paddingVertical="4dp">
 
 
     <androidx.cardview.widget.CardView
         android:id="@+id/account_card"
-        android:layout_width="380dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="-20dp"
-        android:layout_height="88dp"
-        app:cardBackgroundColor="@color/primary_light"
+        style="@style/CardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

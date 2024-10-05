@@ -23,6 +23,7 @@ import com.yemen.ums.ak.accounts_management.views.AccountActivity;
 import com.yemen.ums.ak.accounts_management.views.TransactionsFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AccountsAdapter  extends RecyclerView.Adapter<AccountsAdapter.ViewHandler> {
 
@@ -56,8 +57,8 @@ public class AccountsAdapter  extends RecyclerView.Adapter<AccountsAdapter.ViewH
             holder.account_photo.setImageResource(R.mipmap.ic_launcher);
         }
 
-        holder.account_card.setCardBackgroundColor(account.isDebit()? Color.parseColor("#B2DFDB"):Color.parseColor("#FFB2B2"));
-
+//        holder.account_card.setCardBackgroundColor(account.isDebit()? Color.parseColor("#B2DFDB"):Color.parseColor("#FFB2B2"));
+        holder.account_name.setTextColor(account.isDebit()? Color.parseColor("#B2DFDB"):Color.parseColor("#FFB2B2"));
         holder.account_card.setOnClickListener(view -> showAccount(account.getId()));
     }
 
@@ -81,6 +82,11 @@ public class AccountsAdapter  extends RecyclerView.Adapter<AccountsAdapter.ViewH
         }
     }
 
+    public void submitList(List<Account> accountsList){
+        accounts.clear();
+        accounts.addAll(accountsList);
+        notifyDataSetChanged();
+    }
     private void showAccount(int accountID){
         Intent toAccountActivity = new Intent(context, AccountActivity.class);
         toAccountActivity.putExtra("accountID",accountID);

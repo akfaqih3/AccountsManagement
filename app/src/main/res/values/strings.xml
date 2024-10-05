@@ -22,8 +22,8 @@
     <string name="msg_confirmDelete">Are you sure to delete?.</string>
     <string name="msg_cantDeleteAccount">You can not delete this account becouse it hase uncomplete transactions.</string>
     <!--    strings of account section -->
-    <string name="account">Accounts</string>
-    <string name="accounts">Account</string>
+    <string name="account">Account</string>
+    <string name="accounts">Accounts</string>
     <string name="account_balance">Balance</string>
     <string name="account_transactions">Transactions</string>
     <string name="account_id">ID</string>

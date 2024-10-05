@@ -4,9 +4,8 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
     app:cardCornerRadius="16dp">
     <LinearLayout
         android:id="@+id/pos"
@@ -101,13 +100,21 @@
         </LinearLayout>
 
 
-        <ImageView
-            android:id="@+id/account_img"
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginVertical="16dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher"></ImageView>
+       <androidx.cardview.widget.CardView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center_horizontal"
+           app:cardElevation="0dp"
+           app:cardCornerRadius="64dp">
+           <ImageView
+               android:id="@+id/account_img"
+               android:layout_width="160dp"
+               android:layout_height="160dp"
+               android:layout_gravity="center_horizontal"
+               android:layout_marginVertical="16dp"
+               android:scaleType="centerCrop"
+               android:src="@drawable/default_account_img"></ImageView>
+       </androidx.cardview.widget.CardView>
 
         <Button
             android:id="@+id/accountSave_btn"

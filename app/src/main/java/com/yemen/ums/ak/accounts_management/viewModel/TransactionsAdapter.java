@@ -27,6 +27,7 @@ import com.yemen.ums.ak.accounts_management.models.Account;
 import com.yemen.ums.ak.accounts_management.models.DBHelper;
 import com.yemen.ums.ak.accounts_management.models.Transaction;
 import com.yemen.ums.ak.accounts_management.views.AccountActivity;
+import com.yemen.ums.ak.accounts_management.views.TransactionsFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -75,8 +76,8 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         holder.note.setText(transaction.getNote());
         holder.type.setText(transaction.getType());
 
-        holder.cardView.setCardBackgroundColor(transaction.isWithdraw()? Color.parseColor("#FFB2B2"):Color.parseColor("#B2DFDB"));
-
+//        holder.cardView.setCardBackgroundColor(transaction.isWithdraw()? Color.parseColor("#FFB2B2"):Color.parseColor("#B2DFDB"));
+        holder.balance.setTextColor(transaction.isWithdraw()? Color.parseColor("#FFB2B2"):Color.parseColor("#B2DFDB"));
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         holder.date.setText(dateFormat.format(transaction.getUpdated()));
 
@@ -89,6 +90,11 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         return transactions.size();
     }
 
+    public void submitList(List<Transaction> transactions_){
+        transactions.clear();
+        transactions.addAll(transactions_);
+        notifyDataSetChanged();
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder{
         TextView account_name,balance,note,type,date;
@@ -128,6 +134,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
             public void onClick(DialogInterface dialogInterface, int i) {
                 dbHelper = new DBHelper(context);
                 dbHelper.deleteTransaction(transaction.getId());
+                TransactionsFragment.viewModelTransactions.setTransactions(dbHelper.getTransactiions());
                 Toast.makeText(context,R.string.msg_delete,Toast.LENGTH_SHORT).show();
             }
         });
@@ -189,6 +196,8 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
 
             dbHelper.updateTransaction(newTransaction);
             alertDialog.dismiss();
+            TransactionsFragment.viewModelTransactions.setTransactions(dbHelper.getTransactiions());
+            AccountActivity.viewModelTransactions.setTransactions(dbHelper.getTransactiions());
             Toast.makeText(context,R.string.msg_update,Toast.LENGTH_SHORT).show();
         }catch (Exception ex){
             Toast.makeText(context,ex.getMessage(),Toast.LENGTH_SHORT).show();

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -16,11 +18,17 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.yemen.ums.ak.accounts_management.models.Account;
+import com.yemen.ums.ak.accounts_management.models.DBHelper;
 import com.yemen.ums.ak.accounts_management.models.MySharedPreferences;
+import com.yemen.ums.ak.accounts_management.models.Transaction;
 import com.yemen.ums.ak.accounts_management.views.AccountsFragment;
 import com.yemen.ums.ak.accounts_management.views.FragmentAdapter;
 import com.yemen.ums.ak.accounts_management.views.LoginActivity;
 import com.yemen.ums.ak.accounts_management.views.TransactionsFragment;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
     FragmentAdapter fragmentAdapter ;
@@ -28,7 +36,11 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     Toolbar toolbar;
     Context context;
+    MenuItem searchItem;
 
+    List<Account> accountList;
+    List<Transaction> transactionList;
+    private android.widget.SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,10 +61,11 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
 
-        fragmentAdapter.addFragment(new AccountsFragment(),"Accounts");
-        fragmentAdapter.addFragment(new TransactionsFragment(),"Transactions");
+        fragmentAdapter.addFragment(new AccountsFragment(),getResources().getString(R.string.accounts));
+        fragmentAdapter.addFragment(new TransactionsFragment(),getResources().getString(R.string.transactions));
         viewPager.setAdapter(fragmentAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
 
 
     }
@@ -60,7 +73,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
-        return true;
+        searchItem = menu.findItem(R.id.app_bar_search);
+        searchView = (android.widget.SearchView) searchItem.getActionView();
+
+        DBHelper dbHelper = new DBHelper(context);
+        accountList = dbHelper.getAccounts();
+        transactionList = dbHelper.getTransactiions();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                searchAccount(s);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -70,8 +101,17 @@ public class MainActivity extends AppCompatActivity {
             case "logout":
                 logout();
                 break;
+
+            case "search":
+
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
+
     }
 
     private void logout(){
@@ -80,4 +120,28 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    private void searchAccount(String textSearch){
+        List<Account> newAccountsList ;
+        List<Transaction> newTransactionList;
+        if (textSearch.trim().isEmpty()){
+            AccountsFragment.viewModelAccounts.setAccounts(accountList);
+            TransactionsFragment.viewModelTransactions.setTransactions(transactionList);
+            return;
+        }
+
+        if (fragmentAdapter.getPageTitle(viewPager.getCurrentItem()).toString() == getResources().getString(R.string.accounts)){
+            newAccountsList = accountList.stream()
+                    .filter(account -> account.getName().contains(textSearch)).collect(Collectors.toList());
+            AccountsFragment.viewModelAccounts.setAccounts(newAccountsList);
+        }
+        else if (fragmentAdapter.getPageTitle(viewPager.getCurrentItem()).toString() == getResources().getString(R.string.transactions)) {
+            newTransactionList = transactionList.stream()
+                    .filter((transaction -> transaction.getAccountName().contains(textSearch))).collect(Collectors.toList());
+            TransactionsFragment.viewModelTransactions.setTransactions(newTransactionList);
+        }else {
+            AccountsFragment.viewModelAccounts.setAccounts(accountList);
+            TransactionsFragment.viewModelTransactions.setTransactions(transactionList);
+        }
+
+    }
 }

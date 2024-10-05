@@ -6,12 +6,18 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AlertDialogLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,6 +42,7 @@ import com.yemen.ums.ak.accounts_management.R;
 import com.yemen.ums.ak.accounts_management.models.Account;
 import com.yemen.ums.ak.accounts_management.models.DBHelper;
 import com.yemen.ums.ak.accounts_management.viewModel.AccountsAdapter;
+import com.yemen.ums.ak.accounts_management.viewModel.ViewModelAccounts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +98,7 @@ public class AccountsFragment extends Fragment {
 
 
     RecyclerView accounts_rv;
-    ArrayList<Account> accounts ;
+    public static ArrayList<Account> accounts ;
     AccountsAdapter accountsAdapter;
     DBHelper dbHelper ;
     Context context ;
@@ -110,6 +117,7 @@ public class AccountsFragment extends Fragment {
     Bitmap imageBitmap;
     AlertDialog alertDialog;
 
+    public static ViewModelAccounts viewModelAccounts;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -126,7 +134,12 @@ public class AccountsFragment extends Fragment {
         context = getContext();
         accounts_rv = getView().findViewById(R.id.accounts_rv);
 
+
+
         loadAccounts();
+
+
+
         newAccountBtn = getView().findViewById(R.id.newAccount_btn);
         newAccountBtn.setOnClickListener(view -> showAccountAddDialog());
     }
@@ -146,6 +159,11 @@ public class AccountsFragment extends Fragment {
             LinearLayoutManager LinearLayoutManager = new LinearLayoutManager(context);
             accounts_rv.setLayoutManager(LinearLayoutManager);
             accounts_rv.setAdapter(accountsAdapter);
+
+            viewModelAccounts = new ViewModelProvider(this).get(ViewModelAccounts.class);
+            viewModelAccounts.getAccounts().observe(getViewLifecycleOwner(),accounts1 -> {
+                accountsAdapter.submitList(accounts1);
+            });
 
         }catch (Exception ex){
             throw new RuntimeException();
@@ -174,6 +192,8 @@ public class AccountsFragment extends Fragment {
         accountImg = view.findViewById(R.id.account_img);
         accountSaveBtn = view.findViewById(R.id.accountSave_btn);
 
+        imageBitmap = null;
+
         accountType = Account.ACCOUNT_TYPE;
         arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item,accountType);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -198,11 +218,12 @@ public class AccountsFragment extends Fragment {
             newAccount.setAllow_max(Double.parseDouble(allowmax.getText().toString()));
             newAccount.setType(accountType.get(accountType_spnr.getSelectedItemPosition()).toString());
             newAccount.setActive(active.isChecked());
-            newAccount.setPhoto((imageBitmap!=null)?imageBitmap:null);
+            newAccount.setPhoto(imageBitmap);
             newAccount.setCreated(System.currentTimeMillis());
             newAccount.setUpdated(System.currentTimeMillis());
 
             dbHelper.insertAccount(newAccount);
+            viewModelAccounts.setAccounts(dbHelper.getAccounts());
             alertDialog.dismiss();
             Toast.makeText(context,"Successfylly",Toast.LENGTH_SHORT).show();
         }catch (Exception ex){
@@ -220,6 +241,7 @@ public class AccountsFragment extends Fragment {
                 imageBitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(),imagePath);
                 accountImg.setImageBitmap(imageBitmap);
             }
+
         }catch (Exception ex){
             Toast.makeText(context,ex.getMessage(),Toast.LENGTH_SHORT).show();
         }

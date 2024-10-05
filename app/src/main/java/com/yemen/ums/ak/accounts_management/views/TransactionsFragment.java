@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +30,7 @@ import com.yemen.ums.ak.accounts_management.models.Account;
 import com.yemen.ums.ak.accounts_management.models.DBHelper;
 import com.yemen.ums.ak.accounts_management.models.Transaction;
 import com.yemen.ums.ak.accounts_management.viewModel.TransactionsAdapter;
+import com.yemen.ums.ak.accounts_management.viewModel.ViewModelTransactions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +101,7 @@ public class TransactionsFragment extends Fragment {
     ArrayAdapter<String> transactionTypeAdapter;
     AlertDialog alertDialog;
 
+    public static ViewModelTransactions viewModelTransactions;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -132,6 +136,11 @@ public class TransactionsFragment extends Fragment {
             transactionsAdapter = new TransactionsAdapter(context,transactionsList);
             transactions_rv.setLayoutManager(new LinearLayoutManager(context));
             transactions_rv.setAdapter(transactionsAdapter);
+
+            viewModelTransactions = new ViewModelProvider(this).get(ViewModelTransactions.class);
+            viewModelTransactions.getTransactions().observe(getViewLifecycleOwner(),transactions -> {
+                transactionsAdapter.submitList(transactions);
+            });
         }catch (Exception ex){
             throw new RuntimeException();
         }
@@ -179,6 +188,8 @@ public class TransactionsFragment extends Fragment {
 
             dbHelper.insertTransaction(newTransaction);
             alertDialog.dismiss();
+            viewModelTransactions.setTransactions(dbHelper.getTransactiions());
+            AccountsFragment.viewModelAccounts.setAccounts(dbHelper.getAccounts());
             Toast.makeText(context,R.string.msg_save,Toast.LENGTH_SHORT).show();
         }catch (Exception ex){
             Toast.makeText(context,ex.getMessage(),Toast.LENGTH_SHORT).show();
