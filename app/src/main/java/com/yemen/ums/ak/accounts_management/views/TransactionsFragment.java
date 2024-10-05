@@ -177,11 +177,22 @@ public class TransactionsFragment extends Fragment {
     }
 
     private void saveTransaction(){
+
+        Account account = accounts.get(account_spnr.getSelectedItemPosition());
+        Double the_balance = Double.parseDouble(balance.getText().toString());
+        Double balanceToChek = the_balance;
+        String type = Transaction.TRANSACTION_TYPE.get(transactionType_spnr.getSelectedItemPosition());
+        balanceToChek *= (type.equalsIgnoreCase(Transaction.TRANSACTION_TYPE.get(0)))?1:-1 ;
+        if (!account.isAllow(context,balanceToChek)){
+            Toast.makeText(context,getResources().getString(R.string.msg_notAllowOver)+String.valueOf(account.getAllow_max()),Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         try {
             newTransaction =new Transaction();
-            newTransaction.setAccount(accounts.get(account_spnr.getSelectedItemPosition()).getId());
-            newTransaction.setBalance(Double.parseDouble(balance.getText().toString()));
-            newTransaction.setType(Transaction.TRANSACTION_TYPE.get(transactionType_spnr.getSelectedItemPosition()));
+            newTransaction.setAccount(account.getId());
+            newTransaction.setBalance(the_balance);
+            newTransaction.setType(type);
             newTransaction.setNote(note.getText().toString());
             newTransaction.setCreated(System.currentTimeMillis());
             newTransaction.setUpdated(System.currentTimeMillis());

@@ -1,6 +1,7 @@
 package com.yemen.ums.ak.accounts_management.models;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.graphics.Bitmap;
 
 import androidx.annotation.Nullable;
@@ -8,6 +9,7 @@ import androidx.annotation.Nullable;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Account {
 
@@ -99,6 +101,7 @@ public class Account {
         this.created = created;
         this.updated = updated;
     }
+
 
 
     public int getId() {
@@ -195,5 +198,20 @@ public class Account {
         return account_balance;
     }
 
+
+    public ArrayList<Transaction> getTransactions(Context context){
+        ArrayList<Transaction> transactionList ;
+        DBHelper dbHelper = new DBHelper(context);
+        transactionList =(ArrayList<Transaction>) dbHelper.getTransactionsByAccount(this.getId());
+        return transactionList;
+    }
+
+    public Boolean isAllow(Context context,double balance){
+        ArrayList<Transaction> transactionList = this.getTransactions(context);
+        Double allBalance = Account.getAccountBalance(transactionList);
+        Double allowMax = this.getAllow_max();
+
+        return (balance+allBalance) <= allowMax ;
+    }
 
 }

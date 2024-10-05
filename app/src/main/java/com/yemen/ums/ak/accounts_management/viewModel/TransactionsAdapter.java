@@ -76,7 +76,6 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         holder.note.setText(transaction.getNote());
         holder.type.setText(transaction.getType());
 
-//        holder.cardView.setCardBackgroundColor(transaction.isWithdraw()? Color.parseColor("#FFB2B2"):Color.parseColor("#B2DFDB"));
         holder.balance.setTextColor(transaction.isWithdraw()? Color.parseColor("#FFB2B2"):Color.parseColor("#B2DFDB"));
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         holder.date.setText(dateFormat.format(transaction.getUpdated()));
@@ -135,6 +134,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
                 dbHelper = new DBHelper(context);
                 dbHelper.deleteTransaction(transaction.getId());
                 TransactionsFragment.viewModelTransactions.setTransactions(dbHelper.getTransactiions());
+                AccountActivity.viewModelTransactions.setTransactions(dbHelper.getTransactiions());
                 Toast.makeText(context,R.string.msg_delete,Toast.LENGTH_SHORT).show();
             }
         });

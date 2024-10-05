@@ -4,6 +4,7 @@ import android.content.ContentValues;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Transaction {
 
@@ -16,7 +17,7 @@ public class Transaction {
     public static final String COLUMN_CREATED = "created";
     public static final String COLUMN_UPDATED = "updated";
 
-    public static final ArrayList<String> TRANSACTION_TYPE = new ArrayList<>(Arrays.asList("deposit","withdraw"));
+    public static final ArrayList<String> TRANSACTION_TYPE = new ArrayList<>(Arrays.asList("withdraw","deposit"));
     public static  final String[] COLUMNS = {COLUMN_ID,COLUMN_ACCOUNT,COLUMN_TYPE,COLUMN_BALANCE,COLUMN_NOTE,COLUMN_CREATED,COLUMN_UPDATED};
     public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -78,6 +79,7 @@ public class Transaction {
         this.created = created;
         this.updated = updated;
     }
+
 
     public int getId() {
         return id;
@@ -144,6 +146,11 @@ public class Transaction {
     }
 
     public Boolean isWithdraw(){
-        return this.getType().equalsIgnoreCase(TRANSACTION_TYPE.get(1));
+        return this.getType().equalsIgnoreCase(TRANSACTION_TYPE.get(0));
     }
+
+
+
+
 }
+
