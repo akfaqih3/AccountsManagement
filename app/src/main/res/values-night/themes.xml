@@ -6,18 +6,27 @@
     </style>
 
     <style name="Accounts_management" parent="Base.Theme.Accounts_management">
-        <item name="colorPrimary">@color/primary_dark</item>
+        <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/on_primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:textColorPrimary">@color/on_secondary</item>
+        <item name="android:textColorSecondary">@color/primary</item>
+        <item name="android:textColorHint">@color/primary</item>
+        <item name="tabSelectedTextColor">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="color">@color/primary</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="actionMenuTextColor">@color/on_primary</item>
+        <item name="android:actionMenuTextColor">@color/on_primary</item>
+        <item name="popupMenuBackground">@color/background</item>
     </style>
 
     <style name="CardView">
         <item name="android:layout_width">380dp</item>
+        <item name="android:layout_height">88dp</item>
         <item name="cardCornerRadius">16dp</item>
         <item name="cardElevation">-16dp</item>
         <item name="android:elevation">16dp</item>
-        <item name="cardBackgroundColor">@color/primary</item>
-        <item name="android:layout_height">88dp</item>
+        <item name="cardBackgroundColor">@color/card_background</item>
     </style>
 
 </resources>

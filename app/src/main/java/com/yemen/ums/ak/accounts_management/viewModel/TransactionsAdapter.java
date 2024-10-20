@@ -76,7 +76,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         holder.note.setText(transaction.getNote());
         holder.type.setText(transaction.getType());
 
-        holder.balance.setTextColor(transaction.isWithdraw()? Color.parseColor("#FFB2B2"):Color.parseColor("#B2DFDB"));
+        holder.balance.setTextColor(transaction.isWithdraw()? Color.parseColor("#ff0000"):Color.parseColor("#00ff00"));
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         holder.date.setText(dateFormat.format(transaction.getUpdated()));
 

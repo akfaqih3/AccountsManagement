@@ -112,6 +112,7 @@
                             android:id="@+id/accountActive_chk"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/primary"
                             android:text="active"
                             android:textSize="20dp"></CheckBox>
                     </LinearLayout>

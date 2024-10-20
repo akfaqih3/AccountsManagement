@@ -1,31 +1,27 @@
 package com.yemen.ums.ak.accounts_management.views;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.yemen.ums.ak.accounts_management.MainActivity;
 import com.yemen.ums.ak.accounts_management.R;
-import com.yemen.ums.ak.accounts_management.models.MySharedPreferences;
+import com.yemen.ums.ak.accounts_management.helpers.MySharedPreferences;
 
 public class LoginActivity extends AppCompatActivity implements TextWatcher {
     ViewFlipper viewFlipper;
@@ -50,7 +46,6 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher {
             toMainActivity();
         }
         viewFlipper.setDisplayedChild(MySharedPreferences.isFirstTimeLaunch(context)?1:0);
-
 
     }
 
@@ -82,13 +77,32 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher {
     }
 
     private void signup(){
-        return;
+        if (!signupUsername.getText().toString().trim().isEmpty()){
+            if (signupPassword.getText().toString().trim().contentEquals(signupCoPassword.getText().toString().trim())){
+                MySharedPreferences.signup(context,
+                        signupUsername.getText().toString().trim(),
+                        signupPassword.getText().toString().trim());
+                progressBar.setVisibility(View.VISIBLE);
+                toMainActivity();
+            }else{
+                Toast.makeText(context,"Password Not Match!",Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 
     private void login(){
-        MySharedPreferences.logIn(context);
-        progressBar.setVisibility(View.VISIBLE);
-        toMainActivity();
+
+        String username = loginUsername.getText().toString().trim();
+        String password = loginPassword.getText().toString().trim();
+        if (!username.isEmpty() && ! password.isEmpty()){
+            if (MySharedPreferences.checkUser(context,username,password)){
+                progressBar.setVisibility(View.VISIBLE);
+                toMainActivity();
+            }else {
+                Toast.makeText(context,"username or passwrod is incorrect.",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

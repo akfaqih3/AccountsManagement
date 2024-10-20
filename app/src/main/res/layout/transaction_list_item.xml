@@ -8,7 +8,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/transaction_cv"
-       style="@style/CardView"
+        android:layout_width="380dp"
+        android:layout_height="88dp"
+        style="@style/CardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -50,7 +52,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="99999.00"
-                    android:textColor="@color/text_primary"
                     android:textSize="20dp">
                 </TextView>
 
@@ -77,7 +78,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="type"
-                    android:textColor="@color/text_primary"
                     android:textAlignment="center"
                     android:textSize="20dp">
 

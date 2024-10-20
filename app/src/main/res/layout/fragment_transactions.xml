@@ -27,10 +27,9 @@
         android:layout_marginVertical="8dp"
         android:src="@android:drawable/ic_input_add"
         android:layout_centerInParent="true"
+        app:backgroundTint="@color/primary"
         android:layout_gravity="bottom|center"
         android:layout_margin="144dp"
-        app:backgroundTint="@color/primary"
-        app:rippleColor="@color/primary_light"
         >
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>

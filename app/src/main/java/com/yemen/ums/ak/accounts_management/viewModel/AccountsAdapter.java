@@ -57,8 +57,6 @@ public class AccountsAdapter  extends RecyclerView.Adapter<AccountsAdapter.ViewH
             holder.account_photo.setImageResource(R.mipmap.ic_launcher);
         }
 
-//        holder.account_card.setCardBackgroundColor(account.isDebit()? Color.parseColor("#B2DFDB"):Color.parseColor("#FFB2B2"));
-        holder.account_name.setTextColor(account.isDebit()? Color.parseColor("#B2DFDB"):Color.parseColor("#FFB2B2"));
         holder.account_card.setOnClickListener(view -> showAccount(account.getId()));
     }
 

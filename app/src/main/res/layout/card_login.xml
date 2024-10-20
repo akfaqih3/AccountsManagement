@@ -4,12 +4,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@color/surface"
-android:orientation="vertical"
-android:outlineProvider="bounds"
-android:paddingHorizontal="16dp"
-android:paddingVertical="16dp">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:outlineProvider="bounds"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="16dp">
 
 <TextView
     android:layout_width="match_parent"
