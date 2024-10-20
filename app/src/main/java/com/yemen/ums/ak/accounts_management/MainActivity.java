@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
 
-        fragmentAdapter.addFragment(new AccountsFragment(),getResources().getString(R.string.accounts));
         fragmentAdapter.addFragment(new TransactionsFragment(),getResources().getString(R.string.transactions));
+        fragmentAdapter.addFragment(new AccountsFragment(),getResources().getString(R.string.accounts));
         viewPager.setAdapter(fragmentAdapter);
         tabLayout.setupWithViewPager(viewPager);
 

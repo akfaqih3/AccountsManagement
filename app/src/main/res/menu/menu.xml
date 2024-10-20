@@ -9,17 +9,17 @@
         app:showAsAction="always"
         app:actionViewClass="android.widget.SearchView" />
 
-    <item
-        android:id="@+id/item_languages"
-        android:icon="@drawable/language_icon"
-        android:title="@string/item_language">
+<!--    <item-->
+<!--        android:id="@+id/item_languages"-->
+<!--        android:icon="@drawable/language_icon"-->
+<!--        android:title="@string/item_language">-->
 
-    </item>
+<!--    </item>-->
 
-    <item
-        android:id="@+id/item_about"
-        android:title="@string/item_about">
-    </item>
+<!--    <item-->
+<!--        android:id="@+id/item_about"-->
+<!--        android:title="@string/item_about">-->
+<!--    </item>-->
 
     <item
         android:id="@+id/item_logout"
