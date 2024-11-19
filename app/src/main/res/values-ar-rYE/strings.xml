@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account">الحسابات</string>
+    <string name="accounts">الحساب</string>
+    <string name="account_balance">الرصيد</string>
+    <string name="account_transactions">العمليات</string>
+    <string name="account_id">رقم</string>
+    <string name="account_name">الاسم</string>
+    <string name="account_mobile">الجوال</string>
+    <string name="account_type">النوع</string>
+    <string name="account_allowmax">اعلى قيمة</string>
+    <string name="account_photo">الصورة</string>
+    <string name="account_date">تاريخ الإنشاء</string>
+    <string name="account_new">حساب جديد</string>
+    <string name="account_save">حفظ الحساب</string>
+    <string name="account_Edit">تعديل الحساب</string>
+    <string name="account_delete">حذف الحساب</string>
+    <string name="transactions">العمليات</string>
+    <string name="transaction">العملية</string>
+    <string name="transaction_id">رقم العملية</string>
+    <string name="transaction_account">الحساب</string>
+    <string name="transaction_balance">المبلغ</string>
+    <string name="transaction_type">نوع العملية</string>
+    <string name="transaction_Note">ملاحظة</string>
+    <string name="transaction_date">تاربخ العملية</string>
+    <string name="transaction_new">عملية جديدة</string>
+    <string name="transaction_save">حفظ العملية</string>
+    <string name="transaction_edit">تعديل العملية</string>
+    <string name="transaction_delete">حذف العملية</string>
+</resources>

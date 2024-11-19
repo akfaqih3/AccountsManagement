@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/app_bar_search"
+        android:icon="@drawable/baseline_search_24"
+        android:title="@string/item_search"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.SearchView" />
+
+<!--    <item-->
+<!--        android:id="@+id/item_languages"-->
+<!--        android:icon="@drawable/language_icon"-->
+<!--        android:title="@string/item_language">-->
+
+<!--    </item>-->
+
+<!--    <item-->
+<!--        android:id="@+id/item_about"-->
+<!--        android:title="@string/item_about">-->
+<!--    </item>-->
+
+    <item
+        android:id="@+id/item_logout"
+        android:title="@string/item_logout">
+    </item>
+
+</menu>

@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name" translatable="false">AK_manager</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+
+<!--    string used global-->
+    <string name="login_txt">Login</string>
+    <string name="signup_txt">Signup</string>
+    <string name="hint_username">username</string>
+    <string name="hint_password">password</string>
+    <string name="hint_co_password">password</string>
+    <string name="btn_login">login</string>
+    <string name="btn_signup">signup</string>
+    <string name="txt_yes">Yes</string>
+    <string name="txt_no">No</string>
+    <string name="txt_save">Save</string>
+    <string name="txt_update">Update</string>
+    <string name="txt_delete">Delete</string>
+    <string name="msg_save">Saved.</string>
+    <string name="msg_update">Updated.</string>
+    <string name="msg_delete">Deleted.</string>
+    <string name="msg_confirmDelete">Are you sure to delete?.</string>
+    <string name="msg_cantDeleteAccount">You can not delete this account becouse it hase uncomplete transactions.</string>
+    <string name="msg_notAllowOver">this account not allow over  </string>
+    <!--    strings of account section -->
+    <string name="account">Account</string>
+    <string name="accounts">Accounts</string>
+    <string name="account_balance">Balance</string>
+    <string name="account_transactions">Transactions</string>
+    <string name="account_id">ID</string>
+    <string name="account_name">name</string>
+    <string name="account_mobile">mobile</string>
+    <string name="account_type">type</string>
+    <string name="account_allowmax">Allow to</string>
+    <string name="account_photo">photo</string>
+    <string name="account_date">created</string>
+    <string name="account_new">New</string>
+    <string name="account_save">Save</string>
+    <string name="account_Edit">Edit</string>
+    <string name="account_delete">Delete</string>
+
+    <!--    strings of transactions section-->
+    <string name="transactions">Transactions</string>
+    <string name="transaction">Transaction</string>
+    <string name="transaction_id">ID</string>
+    <string name="transaction_account">Account</string>
+    <string name="transaction_balance">Balance</string>
+    <string name="transaction_type">Type</string>
+    <string name="transaction_Note">Note</string>
+    <string name="transaction_date">Date</string>
+    <string name="transaction_new">New</string>
+    <string name="transaction_save">Save</string>
+    <string name="transaction_edit">Edit</string>
+    <string name="transaction_delete">Delete</string>
+
+    <!--    string of option menu -->
+    <string name="item_search">search</string>
+    <string name="item_language">languages</string>
+    <string name="item_about">about</string>
+    <string name="item_logout">logout</string>
+
+</resources>
