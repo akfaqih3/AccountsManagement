@@ -1,2 +1,2 @@
 # AccountsManagement
-Accounts Management application by java 
+Accounts Management application by java.
